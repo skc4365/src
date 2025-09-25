@@ -14,14 +14,31 @@ public class CRUDClass {
 
 //		createTable();
 
-		insertUsers("1", "홍길동");
+//		insertUsers("1", "홍길동");
 		insertUsers("2", "일지매");
 		selectUsers();
 
 	}
 
-	private void insertUsers() {
-		// TODO Auto-generated method stub
+	private void insertUsers(String id, String name) {
+
+		String sql = "insert into users(id, name) \r\n" + "values (?, ?)";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			int rows = pstmt.executeUpdate();
+			System.out.println("-----" + rows + "행이 추가되었음");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(pstmt, conn);
+		}
 
 	}
 

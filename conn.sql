@@ -12,3 +12,7 @@ create table if not exists users(
 
 -- 테이블 결과 확인 
 select * from users;
+
+-- 추가 레코드
+insert into users(id, name) 
+values ("1", "홍길동");
