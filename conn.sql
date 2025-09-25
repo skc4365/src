@@ -14,5 +14,10 @@ create table if not exists users(
 select * from users;
 
 -- 추가 레코드
-insert into users(id, name) 
-values ("1", "홍길동");
+insert into users(id, name) values ("1", "홍길동");
+
+-- 삭제 레코드
+delete from users where id = "4";
+
+-- 없데이트 레코드내용
+update users set name = "장영실_수정후" where id = "4";
