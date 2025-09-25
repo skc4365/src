@@ -13,6 +13,7 @@ public class CRUDClass {
 	public CRUDClass() {
 
 //		createTable();
+//		dropTable();
 
 //		insertUsers("1", "홍길동");
 //		insertUsers("2", "일지매");
@@ -135,5 +136,23 @@ public class CRUDClass {
 			DBConnection.close(stmt, conn);
 		}
 		System.out.println("--------- 새로운 테이블 생성 END -----------");
+	}
+
+	private void dropTable() {
+		System.out.println("--------- 테이블 삭제 START -----------");
+		String sql = "drop table users";
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement();
+			stmt.execute(sql);
+			System.out.println("users 테이블이 삭제됨");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(stmt, conn);
+		}
+		System.out.println("--------- 테이블 삭제 END -----------");
 	}
 }

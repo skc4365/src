@@ -2,6 +2,8 @@ show databases;
 use exdb;
 
 show tables;
+
+-- 테이블삭제 users
 drop table users;
 
 -- 테이블생성 users
