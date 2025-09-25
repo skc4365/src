@@ -1,6 +1,8 @@
 package com.skc.crud;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -10,16 +12,45 @@ public class CRUDClass {
 
 	public CRUDClass() {
 
-		createTable();
+//		createTable();
+
+		selectUsers();
+	}
+
+	private void selectUsers() {
+		String sql = "select * from users";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (!rs.next()) {
+				System.out.println("users 테이블에 조회된 결과 없음");
+			} else {
+				int rowCount = 0;
+				do {
+					rowCount++;
+					String id = rs.getString("id");
+					String name = rs.getString("name");
+					System.out.println("ID: " + id + "   NAME: " + name);
+				} while (rs.next());
+				System.out.println("------ " + rowCount + "------");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(pstmt, conn);
+		}
 	}
 
 	private void createTable() {
 		System.out.println("--------- 새로운 테이블 생성 START -----------");
 
 //		db연결
-		String sql = "create table if not exists users(\r\n"
-				+ "	id varchar(50),\r\n"
-				+ "	name varchar(100)\r\n"
+		String sql = "create table if not exists users(\r\n" + "	id varchar(50),\r\n" + "	name varchar(100)\r\n"
 				+ ")";
 		Connection conn = null;
 		Statement stmt = null;
@@ -27,15 +58,12 @@ public class CRUDClass {
 		try {
 			conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-//			테이블생성 성공(result == false)
-			boolean result = stmt.execute(sql);
-			String str = (result) ? 
-					"already 테이블users" : "new 테이블users";
-			System.out.println(str);
-			
+			stmt.execute(sql);
+			System.out.println("users 테이블이 존재합니다.");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DBConnection.close(stmt, conn);
 		}
 
