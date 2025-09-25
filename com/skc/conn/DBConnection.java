@@ -3,6 +3,7 @@ package com.skc.conn;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -44,8 +45,14 @@ public class DBConnection {
 		}
 
 	}
-	
-	public static void close(PreparedStatement pstmt, Connection conn) {
+
+	public static void close(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+		try {
+			if (rs != null)
+				rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		try {
 			if (pstmt != null)

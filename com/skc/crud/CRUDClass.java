@@ -14,7 +14,15 @@ public class CRUDClass {
 
 //		createTable();
 
+		insertUsers("1", "홍길동");
+		insertUsers("2", "일지매");
 		selectUsers();
+
+	}
+
+	private void insertUsers() {
+		// TODO Auto-generated method stub
+
 	}
 
 	private void selectUsers() {
@@ -42,7 +50,7 @@ public class CRUDClass {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DBConnection.close(pstmt, conn);
+			DBConnection.close(rs, pstmt, conn);
 		}
 	}
 
